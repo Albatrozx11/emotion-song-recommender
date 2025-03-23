@@ -11,8 +11,16 @@ from django.views.decorators.csrf import csrf_exempt
 from .utils.emotion_detector import detect_emotion
 from django.http import JsonResponse
 from django.conf import settings
+from .utils.spotify_client import get_playlist_tracks
 logger = logging.getLogger(__name__)
-
+SPOTIFY_PLAYLISTS = {
+    'Happy': '37i9dQZF1EIgG2NEOhqsD7',  # Replace with your actual playlist IDs
+    'Sad': '37i9dQZF1DX7qK8ma5wgG1',
+    'Neutral': '37i9dQZF1DX2Nc3B70tvx0',
+    'Angry': '37i9dQZF1DX1rVvRgjX59F',
+    'Surprise': '37i9dQZF1DX4fpCWaHpNic',
+    'Fear': '37i9dQZF1DX0XUsuxWHRQd'
+}
 @api_view(['POST'])
 @csrf_exempt
 def detect_emotion_view(request):
@@ -76,4 +84,37 @@ def detect_emotion_view(request):
     except Exception as e:
         logger.critical(f"Unexpected error: {str(e)}", exc_info=True)
         return Response({'error': 'Internal server error'}, 
+                      status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+
+@api_view(['GET'])
+def get_music_recommendations(request, emotion):
+    """
+    Get music recommendations from Spotify based on detected emotion
+    
+    Parameters:
+    - emotion: The detected emotion (Happy, Sad, Neutral, etc.)
+    """
+    try:
+        # Validate emotion
+        valid_emotions = ['Happy', 'Sad', 'Neutral', 'Angry', 'Surprise', 'Fear']
+        if emotion not in valid_emotions:
+            return Response({'error': 'Invalid emotion'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Get Spotify recommendations
+        if emotion not in SPOTIFY_PLAYLISTS:
+            return Response({'error': f'No music recommendations for {emotion}'}, 
+                          status=status.HTTP_404_NOT_FOUND)
+                
+        playlist_id = SPOTIFY_PLAYLISTS[emotion]
+        tracks = get_playlist_tracks(playlist_id)
+        
+        return Response({
+            'emotion': emotion,
+            'tracks': tracks
+        })
+    
+    except Exception as e:
+        logger.error(f"Error getting music recommendations: {str(e)}")
+        return Response({'error': 'Failed to get music recommendations'}, 
                       status=status.HTTP_500_INTERNAL_SERVER_ERROR)

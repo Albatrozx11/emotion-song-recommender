@@ -20,4 +20,5 @@ from emotion_api import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('detect-emotion/', views.detect_emotion_view, name='detect_emotion'),
+     path('music-recommendations/<str:emotion>/', views.get_music_recommendations, name='get_music_recommendations'),
 ]
