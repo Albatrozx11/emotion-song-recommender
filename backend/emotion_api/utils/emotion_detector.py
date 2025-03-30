@@ -7,8 +7,8 @@ from tensorflow.keras.models import load_model
 # Get absolute paths to model files
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HAAR_PATH = os.path.join(BASE_DIR, 'ml_models', 'haarcascade_frontalface_default.xml')
-MODEL_PATH = os.path.join(BASE_DIR, 'ml_models', r"C:\Users\adith\song-recommender-miniproject\backend\emotion_api\ml_models\full_model_v2.h5")
-
+MODEL_PATH1 = os.path.join(BASE_DIR, 'ml_models', r"C:\Users\adith\song-recommender-miniproject\backend\emotion_api\ml_models\full_model_v2.h5")
+MODEL_PATH2 = os.path.join(BASE_DIR, 'ml_models', r"C:\Users\adith\song-recommender-miniproject\backend\emotion_api\ml_models\ferplus_model_pd_acc.h5")
 # Initialize models outside function to load only once
 try:
     face_cascade = cv2.CascadeClassifier(HAAR_PATH)
@@ -19,13 +19,13 @@ except Exception as e:
     raise
 
 try:
-    emotion_model = load_model(MODEL_PATH)
+    emotion_model = load_model(MODEL_PATH2)
 except Exception as e:
     print(f"Error loading Keras model: {str(e)}")
     raise
 
 # Verify FER-2013 label order (adjust if your model uses different order)
-EMOTION_LABELS = ['angry', 'disgust', 'fear', 'happy', 'sad', 'neutral', 'surprise']
+EMOTION_LABELS = ['sad', 'happy', 'surprise', 'disgust', 'angry', 'neutral', 'fear']
 
 def detect_emotion(image: np.ndarray) -> str:
     """

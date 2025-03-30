@@ -14,12 +14,12 @@ from django.conf import settings
 from .utils.spotify_client import get_playlist_tracks
 logger = logging.getLogger(__name__)
 SPOTIFY_PLAYLISTS = {
-    'Happy': '37i9dQZF1EIgG2NEOhqsD7',  # Replace with your actual playlist IDs
-    'Sad': '37i9dQZF1DX7qK8ma5wgG1',
-    'Neutral': '37i9dQZF1DX2Nc3B70tvx0',
-    'Angry': '37i9dQZF1DX1rVvRgjX59F',
-    'Surprise': '37i9dQZF1DX4fpCWaHpNic',
-    'Fear': '37i9dQZF1DX0XUsuxWHRQd'
+    'Happy': '7FGde60PxaN068p9ckQFCn',  # Replace with your actual playlist IDs
+    'Sad': '1XWOebtqtpxZFRpbfYxuAW',
+    'Neutral': '70sn988W9TTRplecaa1OTZ',
+    'Angry': '5IY4qwjurklLeBuSVca3ME',
+    'Surprise': '7FGde60PxaN068p9ckQFCn',
+    'Fear': '1XWOebtqtpxZFRpbfYxuAW'
 }
 @api_view(['POST'])
 @csrf_exempt
