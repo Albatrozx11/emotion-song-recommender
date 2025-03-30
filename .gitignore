@@ -30,3 +30,12 @@ frontend/package-lock.json
 .idea/
 *.swp
 *.swo
+
+
+# Ignore machine learning models and large binaries
+backend/emotion_api/ml_models/*.h5
+backend/emotion_api/ml_models/*.pkl
+
+# Ignore compiled libraries
+*.dll
+*.pyd
