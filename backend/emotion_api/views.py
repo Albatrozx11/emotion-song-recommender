@@ -12,6 +12,20 @@ from .utils.emotion_detector import detect_emotion
 from django.http import JsonResponse
 from django.conf import settings
 from .utils.spotify_client import get_playlist_tracks
+import base64
+import requests
+from django.shortcuts import redirect
+import secrets
+import urllib.parse
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+client_id = os.getenv("CLIENT_ID")
+client_secret = os.getenv("CLIENT_SECRET")
+frontend_url = os.getenv("FRONTEND_URL")
+redirect_uri = os.getenv("SPOTIFY_REDIRECT_URI")
 logger = logging.getLogger(__name__)
 SPOTIFY_PLAYLISTS = {
     'Happy': '7FGde60PxaN068p9ckQFCn',  # Replace with your actual playlist IDs
